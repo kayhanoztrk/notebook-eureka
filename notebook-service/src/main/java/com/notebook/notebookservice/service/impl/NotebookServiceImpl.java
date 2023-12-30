@@ -13,8 +13,6 @@ import com.notebook.notebookservice.service.NotebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +37,7 @@ public class NotebookServiceImpl implements NotebookService {
     public NotebookDto findAllNotesInNotebookById(Long id) {
         Notebook notebook = notebookRepository.findById(id)
                 .orElseThrow(() -> new NotebookNotFoundException("notebook not found id info:" + id));
-
+        logger.info("searching notebook by id {}", id);
         NotebookDto notebookDto = new NotebookDto();
         notebookDto.setId(notebook.getId());
         notebookDto.setNoteDtoList(notebook.getNoteList()
@@ -64,7 +62,9 @@ public class NotebookServiceImpl implements NotebookService {
                 .orElseThrow(() -> new NotebookNotFoundException("Notebook not found by id :" + notebookCreateRequest.getNotebookId()));
 
         NoteDto noteDto = noteServiceClient.findNoteById(Long.valueOf(notebookCreateRequest.getNotes().get(0))).getBody();
-        notebook.setNoteList(Arrays.asList(noteDto.getId().toString()));
+
+        notebook.getNoteList().add(noteDto.getId().toString());
+        notebook.setNoteList(notebook.getNoteList());
         Notebook createdNotebook = notebookRepository.save(notebook);
         return notebookDtoMapper.convertEntityToRespDto(createdNotebook);
     }

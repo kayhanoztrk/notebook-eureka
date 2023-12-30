@@ -27,12 +27,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {NoteNotFoundException.class})
-    public ResponseEntity<Object> handleNoteNotFoundException(NoteNotFoundException e){
-        ApiException apiException = new ApiException(
-                e.getMessage(),
-                e,
-                ZonedDateTime.now()
-        );
-        return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ExceptionMessage> handleNoteNotFoundException(NoteNotFoundException e){
+        return new ResponseEntity<>(e.getExceptionMessage(), HttpStatus.NOT_FOUND);
     }
 }
