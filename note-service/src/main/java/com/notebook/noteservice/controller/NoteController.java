@@ -4,8 +4,6 @@ import com.notebook.noteservice.dto.request.NoteCreateRequest;
 import com.notebook.noteservice.dto.request.NoteUpdateRequest;
 import com.notebook.noteservice.dto.response.NoteDto;
 import com.notebook.noteservice.service.NoteService;
-import jakarta.ws.rs.Path;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

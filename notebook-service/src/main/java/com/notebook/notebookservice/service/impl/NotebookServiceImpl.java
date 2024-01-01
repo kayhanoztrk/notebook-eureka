@@ -13,6 +13,8 @@ import com.notebook.notebookservice.service.NotebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -73,5 +75,12 @@ public class NotebookServiceImpl implements NotebookService {
     public NotebookResponseDto createNotebook() {
         Notebook createNotebook = notebookRepository.save(new Notebook());
         return notebookDtoMapper.convertEntityToRespDto(createNotebook);
+    }
+
+    @Override
+    public List<Long> getAllNotebookIdInfo() {
+        return notebookRepository.findAll()
+                .stream().map(notebook -> notebook.getId())
+                .collect(Collectors.toList());
     }
 }

@@ -16,4 +16,5 @@ public interface NotebookService {
     NotebookResponseDto findNotebookById(Long id);
     NotebookResponseDto addNoteToNotebook(NotebookCreateRequest notebookCreateRequest);
     NotebookResponseDto createNotebook();
+    List<Long> getAllNotebookIdInfo();
 }

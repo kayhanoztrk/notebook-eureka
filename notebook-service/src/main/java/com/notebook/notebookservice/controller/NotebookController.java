@@ -6,8 +6,11 @@ import com.notebook.notebookservice.dto.response.NotebookResponseDto;
 import com.notebook.notebookservice.service.NotebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 public class NotebookController {
     private static final Logger logger = LoggerFactory.getLogger(NotebookController.class);
     private final NotebookService notebookService;
+    private final Environment environment;
 
-    public NotebookController(NotebookService notebookService) {
+    public NotebookController(NotebookService notebookService, Environment environment) {
         this.notebookService = notebookService;
+        this.environment = environment;
     }
 
     @GetMapping("/notebookId/{id}")
@@ -33,6 +38,7 @@ public class NotebookController {
 
     @PostMapping
     public ResponseEntity<NotebookResponseDto> createNotebook() {
+        logger.info("Notebook created on port number:", environment.getProperty("server.port"));
         NotebookResponseDto notebookResponseDto = notebookService.createNotebook();
         return ResponseEntity.ok(notebookResponseDto);
     }
@@ -49,4 +55,12 @@ public class NotebookController {
         NotebookResponseDto notebookResponseDto = notebookService.findNotebookById(id);
         return ResponseEntity.ok(notebookResponseDto);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Long>> getAllNotebookIdInfo(){
+        List<Long> notebookList = notebookService.getAllNotebookIdInfo();
+        return ResponseEntity.ok(notebookList);
+    }
+
+
 }
