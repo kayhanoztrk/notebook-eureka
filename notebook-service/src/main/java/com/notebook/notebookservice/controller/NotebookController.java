@@ -6,6 +6,7 @@ import com.notebook.notebookservice.dto.response.NotebookResponseDto;
 import com.notebook.notebookservice.service.NotebookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,9 @@ public class NotebookController {
     private static final Logger logger = LoggerFactory.getLogger(NotebookController.class);
     private final NotebookService notebookService;
     private final Environment environment;
+
+    @Value("${notebook.service.count}")
+    private Integer count;
 
     public NotebookController(NotebookService notebookService, Environment environment) {
         this.notebookService = notebookService;
@@ -60,6 +64,12 @@ public class NotebookController {
     public ResponseEntity<List<Long>> getAllNotebookIdInfo(){
         List<Long> notebookList = notebookService.getAllNotebookIdInfo();
         return ResponseEntity.ok(notebookList);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<String> getCount(){
+        return ResponseEntity.ok("notebookService count:" + count);
+        //return ResponseEntity.ok("test!");
     }
 
 
