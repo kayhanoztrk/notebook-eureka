@@ -25,9 +25,8 @@ public class NotebookController {
     private static final Logger logger = LoggerFactory.getLogger(NotebookController.class);
     private final NotebookService notebookService;
     private final Environment environment;
-
     @Value("${notebook.service.count}")
-    private Integer count;
+   private Integer count;
 
     public NotebookController(NotebookService notebookService, Environment environment) {
         this.notebookService = notebookService;
