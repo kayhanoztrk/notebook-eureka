@@ -68,7 +68,6 @@ public class NotebookController {
     @GetMapping("/count")
     public ResponseEntity<String> getCount(){
         return ResponseEntity.ok("notebookService count:" + count);
-        //return ResponseEntity.ok("test!");
     }
 
 
